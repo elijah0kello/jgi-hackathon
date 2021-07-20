@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "master-bruin-319711"
+    "default": "master-bruin-319711",
+    "jgi": "master-bruin-319711"
   }
 }
