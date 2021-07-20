@@ -1,0 +1,11 @@
+{
+  "name": "functions",
+  "version": "1.0.0",
+  "description": "Cloud Functions",
+  "main": "index.js",
+  "author": "Elijah Okello",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^7.31.0"
+  }
+}
