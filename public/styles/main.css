@@ -68,6 +68,7 @@
 
 .home-cta:hover{
   border:1px solid rgb(45, 210, 240);
+  cursor:pointer;
 }
 
 .btn-container{
