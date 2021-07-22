@@ -1,0 +1,89 @@
+.home-body{
+  margin:0;
+  background: rgb(2,82,15);
+  background: linear-gradient(90deg, rgba(2,82,15,1) 18%, rgba(195,115,2,1) 86%);
+}
+/* Home Page Styles */
+.home-nav{
+  background: rgba(0,0 ,0, 0.6);
+  overflow: hidden;
+  padding: 0.4em;
+  backdrop-filter: blur(50px);
+}
+
+.home-nav-list{
+  display:inline;
+  margin-left:2em;
+  font-family: 'Barlow', sans-serif;
+}
+
+.nav-img-logo{
+  margin-top: 0.4em;
+}
+
+.nav-container{
+  display: flex;
+}
+
+.home-right-nav{
+  margin-left:400px;
+  color:white;
+  font-size: 13px;
+  padding-top:1em;
+}
+
+
+.home-left-nav{
+  color: white;
+  font-size: 13px;
+}
+
+.home-title{
+  text-align: center;
+  color: white;
+  font-size:40px;
+  margin-top:2em;
+  font-family: 'Barlow', sans-serif;
+}
+
+.home-description{
+  text-align: center;
+  color: white;
+  font-size:18px;
+  font-weight:3px;
+  margin-top:2em;
+  width:70%;
+  margin:auto;
+  font-family: 'Sarabun', sans-serif; 
+}
+
+.home-cta{
+  background: transparent;
+  color: white;
+  padding:1.1em;
+  border: 1px solid gray;
+  border-radius:999px;
+  font-family: 'Barlow', sans-serif;
+}
+
+.home-cta:hover{
+  border:1px solid rgb(45, 210, 240);
+}
+
+.btn-container{
+  width:14%;
+  margin:auto;
+  margin-top: 2em;
+}
+
+.chimp-img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+}
+
+.bi-arrow-right{
+  color:rgb(45, 210, 240);
+  margin-left:1em;
+}
