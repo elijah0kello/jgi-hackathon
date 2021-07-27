@@ -19,15 +19,16 @@ admin.initializeApp();
 @param {req} // Request Object
 @param {res} // Response Object
 */
-exports.authenticator = functions.https.onRequest((req, res, next) => {
-  dsjwt.login(req, res, next);
+exports.authenticator = functions.https.onRequest((request, response, next) => {
+  const LoginStatus = dsjwt.login(request, response, next);
+  response.send(LoginStatus);
 });
 
-// Callback function for Docusign to receive the access token
-exports.callBackJGI = functions.https.onRequest(() => {
-  // receive and store the access token
-});
+// // Callback function for Docusign to receive the access token
+// exports.callBackJGI = functions.https.onRequest(() => {
+//   // receive and store the access token
+// });
 
-exports.initiateSigning = functions.https.onRequest((req, res) => {
-  // E signature process initiation
-});
+// exports.initiateSigning = functions.https.onRequest((req, res) => {
+//   // E signature process initiation
+// });

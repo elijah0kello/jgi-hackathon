@@ -85,34 +85,28 @@ DsJwtAuth.prototype.checkToken = function _checkToken(
  *
  * We need a new accessToken. We will use the DocuSign SDK's function.
  */
-DsJwtAuth.prototype.getToken = async function _getToken() {
+ DsJwtAuth.prototype.getToken = async function _getToken() {
   // Data used
   // dsConfig.dsClientId
   // dsConfig.impersonatedUserGuid
   // dsConfig.privateKey
   // dsConfig.dsOauthServer
-
+  
   const jwtLifeSec = 10 * 60, // requested lifetime for the JWT is 10 min
-    dsApi = new docusign.ApiClient();
-  dsApi.setOAuthBasePath(dsConfig.dsOauthServer.replace("https://", "")); // it should be domain only.
-  const results = await dsApi.requestJWTUserToken(
-    dsConfig.dsClientId,
-    dsConfig.impersonatedUserGuid,
-    this.scopes,
-    rsaKey,
-    jwtLifeSec
-  );
+      dsApi = new docusign.ApiClient();
+  dsApi.setOAuthBasePath(dsConfig.dsOauthServer.replace('https://', '')); // it should be domain only.
+  const results = await dsApi.requestJWTUserToken(dsConfig.dsClientId,
+      dsConfig.impersonatedUserGuid, this.scopes, rsaKey,
+      jwtLifeSec);
 
-  const expiresAt = moment()
-    .add(results.body.expires_in, "s")
-    .subtract(tokenReplaceMin, "m");
+  const expiresAt = moment().add(results.body.expires_in, 's').subtract(tokenReplaceMin, 'm');
   this.accessToken = results.body.access_token;
   this._tokenExpiration = expiresAt;
   return {
-    accessToken: results.body.access_token,
-    tokenExpirationTimestamp: expiresAt,
+      accessToken: results.body.access_token,
+      tokenExpirationTimestamp: expiresAt
   };
-};
+}
 
 /**
  * Sets the following variables:
@@ -209,13 +203,7 @@ DsJwtAuth.prototype.login = function (req, res, next) {
         if (err) {
           return next(err);
         }
-        if (req.session.eg) {
-          let eg = req.session.eg;
-          req.session.eg = null;
-          res.redirect(`/${eg}`);
-        } else {
-          res.redirect("/");
-        }
+        return { logged_in: true };
       });
     })
     .catch((e) => {
@@ -230,7 +218,7 @@ DsJwtAuth.prototype.login = function (req, res, next) {
               `${dsConfig.dsOauthServer}/oauth/auth?response_type=code&` +
               `scope=${consent_scopes}&client_id=${dsConfig.dsClientId}&` +
               `redirect_uri=${dsConfig.appUrl}/ds/callback`;
-          res.redirect(consent_url);
+          return { seek_consent: true, url: consent_url };
         } else {
           // Consent has been granted. Show status code for DocuSign API error
           this._debug_log(`\nAPI problem: Status code ${
