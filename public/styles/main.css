@@ -1,3 +1,8 @@
+a {
+   color: inherit;
+   text-decoration: none; 
+} 
+
 .home-body{
   margin:0;
   background: rgb(2,82,15);
@@ -5,7 +10,7 @@
 }
 /* Home Page Styles */
 .home-nav{
-  background: rgba(0,0 ,0, 0.6);
+  background: rgba(0, 0, 0, 0.623);
   overflow: hidden;
   padding: 0.4em;
   backdrop-filter: blur(50px);
@@ -15,6 +20,11 @@
   display:inline;
   margin-left:2em;
   font-family: 'Barlow', sans-serif;
+}
+
+.home-nav-list:hover{
+  color:rgb(45, 210, 240);
+  cursor: pointer;
 }
 
 .nav-img-logo{
