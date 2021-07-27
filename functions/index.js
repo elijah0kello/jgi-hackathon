@@ -20,7 +20,7 @@ admin.initializeApp();
 @param {res} // Response Object
 */
 exports.authenticator = functions.https.onRequest((request, response, next) => {
-  const LoginStatus = dsjwt.login(request, response, next);
+  const LoginStatus = dsjwt.DsJwtAuth.login(request, response, next);
   response.send(LoginStatus);
 });
 
