@@ -24,12 +24,12 @@
     <script defer src="/__/firebase/8.7.1/firebase-analytics.js"></script>
     <script defer src="/__/firebase/8.7.1/firebase-remote-config.js"></script>
     <script defer src="/__/firebase/8.7.1/firebase-performance.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- 
         initialize the SDK after all desired features are loaded, set useEmulator to false
         to avoid connecting the SDK to running emulators.
       -->
-    <script defer src="/__/firebase/init.js?useEmulator=false"></script>
-    <script defer src="./scripts/index.js"></script>
+    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
     <title>CCM</title>
 </head>
 
@@ -43,14 +43,14 @@
                                 src="https://www.janegoodall.org/wp-content/themes/joyn-child/images/jgi-footer-logo.png"
                                 alt="logo"></li>
                         <li class="home-nav-list" style="color: rgb(45, 210, 240) !important;"><a href="#">HOME</a></li>
-                        <li class="home-nav-list"><a href="#">MAP VIEW</a></li>
-                        <li class="home-nav-list"><a href="#">JANE GOODALL INSTITUTE</a></li>
+                        <li class="home-nav-list"><a href="./map.html">MAP VIEW</a></li>
+                        <li class="home-nav-list"><a href="https://janegoodall.org/">JANE GOODALL INSTITUTE</a></li>
                     </ul>
                 </div>
                 <div class="home-right-nav">
                     <ul>
-                        <li class="home-nav-list"><a href="#">LOG IN</a></li>
-                        <li class="home-nav-list"> <a href="./login.html">SIGN UP</a></li>
+                        <li class="home-nav-list"><a href="./auth.html">LOG IN</a></li>
+                        <li class="home-nav-list"> <a href="./auth.html">SIGN UP</a></li>
                     </ul>
                 </div>
             </div>
@@ -65,51 +65,14 @@
                     recognize the rights of the great apes? Yes.” -- Jane Goodall
                 </p>
                 <div class="btn-container">
-                    <button class="home-cta"> <span>START MAPPING</span><i class="bi bi-arrow-right"></i></button>
+                    <button class="home-cta"> <a href="./map.html"><span>START MAPPING</span></a><i
+                            class="bi bi-arrow-right"></i></button>
                 </div>
                 <img class="chimp-img" src="./images/chimp.png" height="290" alt="chimps">
             </div>
         </section>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const loadEl = document.querySelector('#load');
-            // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-            // // The Firebase SDK is initialized and available here!
-            //
-            // firebase.auth().onAuthStateChanged(user => { });
-            // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-            // firebase.firestore().doc('/foo/bar').get().then(() => { });
-            // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-            // firebase.messaging().requestPermission().then(() => { });
-            // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-            // firebase.analytics(); // call to activate
-            // firebase.analytics().logEvent('tutorial_completed');
-            // firebase.performance(); // call to activate
-            //
-            // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-            try {
-                let app = firebase.app();
-                let features = [
-                    'auth',
-                    'database',
-                    'firestore',
-                    'functions',
-                    'messaging',
-                    'storage',
-                    'analytics',
-                    'remoteConfig',
-                    'performance',
-                ].filter(feature => typeof app[feature] === 'function');
-                loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-            } catch (e) {
-                console.error(e);
-                loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
-            }
-        });
-    </script>
-
+    <script src="./scripts/index.js"></script>
 </body>
 
 </html>

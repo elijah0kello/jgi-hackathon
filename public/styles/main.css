@@ -98,3 +98,24 @@ a {
   color:rgb(45, 210, 240);
   margin-left:1em;
 }
+
+/* initiateAudit Page */
+.add-signer-btn{
+  cursor: pointer;
+  background-color: blue;
+  width: 6em;
+  margin-top:0.9em;
+}
+
+#signer{
+  display: block;
+  margin-top: 0.9em;
+}
+
+.signerData{
+  width:50%;
+  display:flex;
+  justify-content: space-around;
+  margin-left: 1em;
+  margin-top: 1em;
+}
