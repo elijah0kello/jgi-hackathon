@@ -3,6 +3,13 @@ document.addEventListener("DOMContentLoaded", function () {
     // initialise firebase
     let app = firebase.app();
 
+    document.getElementById("removeField").addEventListener("click", () => {
+      var fieldContainer = document.getElementById("signers-container");
+      var containerChildren = fieldContainer.childNodes;
+      var elementToRemove = containerChildren[containerChildren.length - 1];
+      elementToRemove.remove();
+    });
+
     // Event Handler to add a new email input field
     document
       .getElementById("addSignerTrigger")
@@ -16,19 +23,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
         newEmailInput.type = "email";
         newEmailInput.id = "signerEmail";
-        newEmailInput.placeholder = "Add another Signer's Email";
+        newEmailInput.placeholder = "Another Stakeholder's Email";
         newEmailInput.className = "email-input";
+        newEmailInput.required = true;
 
         newNameInput.type = "text";
         newNameInput.id = "signerName";
-        newNameInput.placeholder = "Add another Signer's Name";
+        newNameInput.placeholder = "Another Stakeholder's Name";
         newNameInput.className = "name-input";
+        newNameInput.required = true;
 
         divContainer.className = "signerData";
         divContainer.appendChild(newEmailInput);
         divContainer.appendChild(newNameInput);
 
-        document.getElementById("signers-container").appendChild(divContainer);
+        var newCenteredDiv = document.createElement("div");
+        newCenteredDiv.id = "realSignerDataContainer";
+        newCenteredDiv.className = "realSignerDataContainer";
+        newCenteredDiv.appendChild(divContainer);
+
+        document
+          .getElementById("signers-container")
+          .appendChild(newCenteredDiv);
+        document.getElementById("removeField").hidden = false;
       });
 
     // Send data to server
@@ -64,29 +81,52 @@ document.addEventListener("DOMContentLoaded", function () {
         // Getting data from the form
         var signersArray = [];
         for (var i = 0; i < nodeCollection.length; i++) {
-          if (nodeCollection[i].nodeName == "DIV") {
+          if (nodeCollection[i].id == "realSignerDataContainer") {
+            var signerEmail, signerName;
             for (var j = 0; j < nodeCollection[i].childNodes.length; j++) {
-              // console.log("Inner Div loop iteration" + i);
-              if (nodeCollection[i].childNodes[j].nodeName == "INPUT") {
-                var signerEmail, signerName;
-                if (nodeCollection[i].childNodes[j].id == "signerEmail") {
-                  console.log(
-                    "Signer Email: " + nodeCollection[i].childNodes[j].value
-                  );
-                  console.log(i);
-                  signerEmail = nodeCollection[i].childNodes[j].value;
-                } else if (nodeCollection[i].childNodes[j].id == "signerName") {
-                  console.log(
-                    "Signer Name: " + nodeCollection[i].childNodes[j].value
-                  );
-                  console.log(i);
-                  signerName = nodeCollection[i].childNodes[j].value;
-                  signersArray.push({ email: signerEmail, name: signerName });
+              //outerDiv realSignerDataContainer
+              if (nodeCollection[i].childNodes[j].nodeName == "DIV") {
+                for (
+                  var k = 0;
+                  k < nodeCollection[i].childNodes[j].childNodes.length;
+                  k++
+                ) {
+                  // innerDiv signerData
+                  if (
+                    nodeCollection[i].childNodes[j].childNodes[k].nodeName ==
+                    "INPUT"
+                  ) {
+                    if (
+                      nodeCollection[i].childNodes[j].childNodes[k].id ==
+                      "signerEmail"
+                    ) {
+                      console.log(
+                        "Email: " +
+                          nodeCollection[i].childNodes[j].childNodes[k].value
+                      );
+                      signerEmail =
+                        nodeCollection[i].childNodes[j].childNodes[k].value;
+                    } else if (
+                      nodeCollection[i].childNodes[j].childNodes[k].id ==
+                      "signerName"
+                    ) {
+                      console.log(
+                        "Name: " +
+                          nodeCollection[i].childNodes[j].childNodes[k].value
+                      );
+                      signerName =
+                        nodeCollection[i].childNodes[j].childNodes[k].value;
+                    }
+                  } else {
+                    continue;
+                  }
                 }
               } else {
                 continue;
               }
             }
+            signersArray.push({ email: signerEmail, name: signerName });
+            console.log(JSON.stringify(signersArray));
           } else {
             continue;
           }
@@ -98,8 +138,8 @@ document.addEventListener("DOMContentLoaded", function () {
         payLoadObj.initiatorName =
           document.getElementById("initiatorName").value;
         console.log(JSON.stringify(payLoadObj));
-        // // call the sendSignature function
-        // sendSignature(payLoadObj);
+        // call the sendSignature function
+        sendSignature(payLoadObj);
       });
 
     app.auth().onAuthStateChanged(async (user) => {

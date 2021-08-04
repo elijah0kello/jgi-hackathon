@@ -39,7 +39,7 @@ exports.getToken = functions.https.onRequest(async (resquest, response) => {
   data.append("grant_type", "urn:ietf:params:oauth:grant-type:jwt-bearer");
   data.append(
     "assertion",
-    "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI0ZWM4MDZjZS0yMzFjLTQ4MzMtOWIzMy1hOGQ0OGJlYjA5YWMiLCJzdWIiOiI0MjQyNzJkMS00MjkzLTQwMTUtYjFhOS1jNjQ1YzFlMTkyNWYiLCJhdWQiOiJhY2NvdW50LWQuZG9jdXNpZ24uY29tIiwiaWF0IjoxNjI3Mzc2OTQ2LCJleHAiOjE2NTg5MDY1NTAsInNjb3BlIjoic2lnbmF0dXJlIn0.nNGCwj_JG92xX63cirN-zEkqgxMvG05tHkPuAOxK-tHnqM_r4_qTwtwyk8exusNpX5WOuVsaPWjCYHwh5hmtMxLAUCRI7iPbTsnqiN8BdyyvgR_FMp8cDwcUBFmkdUb0gT5RHNkMxtDS4w8tP5qwC5K9fMAgK-YCoDjmRz8RTlyx2QrAsGD6zVGAHiWAhq0tIID-Ak06IotN1ggu1eArbG-0Ip3B535sJWk-10N4ApP7xpSGuLY5__Ud9J3ZUn2GuDzN6sbRhzoDbTECf1Uq_HJp7-K7U8a5dviP4PATKEvhCnOGTyXHbhXsMKbQ0EZ4FLhiEyXbbA0VfyZLyUsW7A"
+    "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI4NmI2NmU3Mi03M2QzLTRlNmMtODQ2Yi1lMzhiZTU3M2I4NmYiLCJzdWIiOiI0MjQyNzJkMS00MjkzLTQwMTUtYjFhOS1jNjQ1YzFlMTkyNWYiLCJhdWQiOiJhY2NvdW50LWQuZG9jdXNpZ24uY29tIiwiaWF0IjoxNjI4MDEwMDEwLCJleHAiOjE4ODA0NzA4MTAsInNjb3BlIjoic2lnbmF0dXJlIn0.FNwM9np3e1duyaZ15zrHGKaj4Li5517VS0aEZY3Jp4Vlm9GwMsTReRMrA5pOPAHhi0wXTRdKDthZFlVfJICTNIHAJflU6htX5XetKqGhZ75toZgPW6eAAs59TwO0BhRJrNIoqgNAcfMpmSW2tU-l3hfHbh4NazXUVIT11ocSIbaLBvDu2va8HquVNpV31G98xNA_WvWJ2vOmSbYg_-HqLRsdAWHp8jYNN_aSZnkLgCdzCDLOUmUm3-dPI0PIS_vDVwvhdkNbPx31OvbMFyczPsI0CvR6ookcUuhReWvfg5QcG5HJcLgBuUAGp56bke8Z9v2zwDaVs1P_s1RgvQmclg"
   );
 
   var config = {
@@ -53,6 +53,7 @@ exports.getToken = functions.https.onRequest(async (resquest, response) => {
 
   axios(config)
     .then(async function (res) {
+      console.log("Token Acquisiton Response: " + JSON.stringify(res.data));
       var issueDate = new Date();
       var expirationDate = issueDate.setSeconds(issueDate.getSeconds() + 3600);
       // console.log(JSON.stringify(response.data));
@@ -67,12 +68,13 @@ exports.getToken = functions.https.onRequest(async (resquest, response) => {
       });
 
       // Set response Headers
+      console.log("Token acquisition Successful in GET TOKEN CLOUD FUNC");
       response.setHeader("Content-Type", "Application/Json");
       response.setHeader("Access-Control-Allow-Origin", `${dsConfig.appUrl}`);
       response.send(JSON.stringify({ status: true }));
     })
     .catch(function (error) {
-      console.log(error);
+      console.log("Token acquisition Failed in GET TOKEN CLOUD FUNC" + error);
       response.setHeader("Content-Type", "Application/Json");
       response.setHeader("Access-Control-Allow-Origin", `${dsConfig.appUrl}`);
       response.send(JSON.stringify({ status: false, error: error }));
@@ -145,6 +147,7 @@ function makeEnvelope(data) {
   // create a signer recipient to sign the document, identified by name and email
   // We're setting the parameters via the object constructor
   var signersArray = [];
+  console.log(JSON.stringify(data.signers));
   for (var i = 0; i < data.signers.length; i++) {
     signersArray[i] = docusign.Signer.constructFromObject({
       email: data.signers[i].email,
@@ -152,7 +155,10 @@ function makeEnvelope(data) {
       recipientId: `${i + 1}`,
       routingOrder: `${i + 1}`,
     });
+    console.log("EMAIL Example data in loop: " + data.signers[i].email);
+    console.log("NAME Example data in loop: " + data.signers[i].name);
   }
+  console.log("After the loop: " + JSON.stringify(signersArray));
   // Create signHere fields (also known as tabs) on the documents,
   // We're using anchor (autoPlace) positioning
   //
@@ -175,11 +181,14 @@ function makeEnvelope(data) {
   for (var j = 0; j < signersArray.length; j++) {
     signersArray[j].tabs = signerTab;
   }
+
+  console.log("After tab assignment: " + JSON.stringify(signersArray));
   // Add the recipients to the envelope object
   let recipients = docusign.Recipients.constructFromObject({
     signers: signersArray,
   });
   env.recipients = recipients;
+  console.log("Recipient: " + JSON.stringify(recipients));
   // Requestrequestuest that the envelope be sent by setting |status| to "sent".
   // To requestuest that the envelope be created as a draft, set to "created"
   env.status = "sent";
@@ -189,34 +198,37 @@ function makeEnvelope(data) {
 
 // function to call the e-signature api
 const eSignFunc = async (basePath, accessToken, data) => {
-  // Data for this method
-  // args.basePath
-  // args.accessToken
-  // args.accountId
-  // console.log("Base Path: " + basePath + " Acc: " + accessToken);
-
-  let dsApiClient = new docusign.ApiClient();
-  dsApiClient.setBasePath(basePath);
-  dsApiClient.addDefaultHeader("Authorization", "Bearer " + accessToken);
-  let envelopesApi = new docusign.EnvelopesApi(dsApiClient);
-
-  // Step 1. Make the envelope requestuest body
   try {
     let envelope = makeEnvelope(data);
+    // console.log(JSON.stringify(envelope));
+    var data = JSON.stringify(envelope);
 
+    var config = {
+      method: "post",
+      url: `${basePath}/restapi/v2.1/accounts/${dsConfig.apiAccountId}/envelopes`,
+      headers: {
+        Authorization: "Bearer " + accessToken,
+        "Content-Type": "application/json",
+        Cookie:
+          "BIGipDocuSign_Demo=!Yp0hzI6BhQgkRkylGUtBI6+PACSoFsHWmbndIYXexV+4Pcl3DK1kyN4yMG3tOW+1IomdnW9ufl8jMpk=",
+      },
+      data: data,
+    };
     // Step 2. call Envelopes::create API method
     // Exceptions will be caught by the calling function
-    let results = await envelopesApi.createEnvelope(dsConfig.apiAccountId, {
-      envelopeDefinition: envelope,
-    });
-    let envelopeId = results.envelopeId;
-
-    console.log(`Envelope was created. EnvelopeId ${envelopeId}`);
-    if (results.status == "sent") {
-      return true;
-    } else {
-      return false;
-    }
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        // console.log(`Envelope was created. EnvelopeId ${envelopeId}`);
+        if (response.data.status == "sent") {
+          return true;
+        } else {
+          return false;
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   } catch (error) {
     console.log("DS API CALL FAILED: " + error);
     return false;
@@ -235,7 +247,7 @@ const getUserInfo = async (theToken, data) => {
   await axios(config)
     .then(function (res) {
       let userData = res.data;
-      // console.log(userData);
+      console.log(userData.accounts[0].base_uri);
       try {
         var result = eSignFunc(userData.accounts[0].base_uri, theToken, data);
         if (result) {
@@ -312,6 +324,7 @@ exports.initiateSigning = functions
                   console.log(data);
                   try {
                     var result = retrieveToken(data);
+                    console.log(JSON.stringify(result));
                     if (result) {
                       console.log("Token acquired");
                       response.send(JSON.stringify({ status: true }));
@@ -350,10 +363,14 @@ exports.initiateSigning = functions
             /**********Token Acquisition**********/
           } else {
             console.log("Using Old token");
-            console.log(data);
+            // console.log(data);
             var result = retrieveToken(data);
-            console.log("Using old token");
-            response.send(JSON.stringify({ status: true, result: result }));
+            // console.log("Using old token");
+            if (result) {
+              response.send(JSON.stringify({ status: true, result: result }));
+            } else {
+              response.send(JSON.stringify({ status: false, result: result }));
+            }
           }
         } else {
           console.log("No such doc");

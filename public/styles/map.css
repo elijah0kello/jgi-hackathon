@@ -1,0 +1,67 @@
+a {
+    color: inherit;
+    text-decoration: none; 
+ } 
+
+html,
+body,
+#viewDiv {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index:-2;
+}
+
+.map-btn-container{
+    position: absolute;
+    z-index: 10;
+    width: 50%;
+    margin-left:auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    top:2em;
+    left:18em;
+    color:white;
+}
+.map-para{
+    font-family: 'Sarabun', sans-serif;
+}
+
+.map-info{
+    position: absolute;
+    z-index: 10;
+    bottom: 2em;
+    right:10px;
+    padding: 1em;
+    background-color: white;
+    width: 280px;
+    font-weight:bolder;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.start-audit-btn{
+    background:rgb(73, 184, 235);
+    padding:1.1em;
+    border: 1px solid rgb(73, 184, 235);
+    border-radius:999px;
+    font-family: 'Barlow', sans-serif;
+    color:white;
+}
+
+.start-audit-btn:hover{
+    border:1px solid rgb(73, 184, 235);
+    cursor:pointer;
+}
+
+.bi-arrow-right{
+    color:white;
+    margin-left:1em;
+}
+
+.homeCTA{
+    color:blue;
+    margin-left:1em;
+    font-family: 'Barlow', sans-serif;
+}

@@ -20,19 +20,28 @@
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
-    <style>
-        .auth__container {
-            background-color: rgb(192, 211, 142);
-        }
-    </style>
-
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300&family=Sarabun:wght@100&display=swap"
+        rel="stylesheet">
 </head>
 
-<body>
+<body class="auth-body">
     <div class="auth__container">
-        <div id="firebase-auth-container">
-
+        <div class="auth-container-center">
+            <div>
+                <a href="/"><img class="nav-img-logo-login" width="270" height="16"
+                        src="https://www.janegoodall.org/wp-content/themes/joyn-child/images/jgi-footer-logo.png"
+                        alt="logo"></a>
+            </div>
+            <div>
+                <p class="login-word">LOGIN</p>
+            </div>
+            <div id="firebase-auth-container"></div>
         </div>
+        <!-- <img class="login-img" src="./images/login.jpg" alt=""> -->
     </div>
     <script src="./scripts/auth.js"></script>
 </body>

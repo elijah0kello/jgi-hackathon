@@ -10,16 +10,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300&family=Sarabun:wght@100&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="./styles/audit.css">
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/8.7.1/firebase-app.js"></script>
     <!-- include only the Firebase features as you need -->
     <script defer src="/__/firebase/8.7.1/firebase-auth.js"></script>
-    <script defer src="/__/firebase/8.7.1/firebase-database.js"></script>
     <script defer src="/__/firebase/8.7.1/firebase-firestore.js"></script>
-    <script defer src="/__/firebase/8.7.1/firebase-functions.js"></script>
     <script defer src="/__/firebase/8.7.1/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/8.7.1/firebase-storage.js"></script>
     <script defer src="/__/firebase/8.7.1/firebase-analytics.js"></script>
     <script defer src="/__/firebase/8.7.1/firebase-remote-config.js"></script>
     <script defer src="/__/firebase/8.7.1/firebase-performance.js"></script>
@@ -35,31 +32,50 @@
 <body>
     <div class="audit__container">
         <div class="audit__form__container">
-            <form action="" method="POST">
+            <div class="audit-logo-container">
+                <a href="/"><img class="img-logo"
+                        src="https://www.janegoodall.org/wp-content/themes/joyn-child/images/jgi-footer-logo.png"
+                        alt="logo"></a>
+            </div>
+            <form class="audit-form" action="" method="POST">
                 <div class="audit__input__container">
                     <div class="left-input-container">
-                        <p>Add Signer Emails</p>
+                        <p class="audit-desc">ADD STAKEHOLDER EMAILS</p>
+                        <hr class="audit-divider">
+                        <p class="audit-desc-1">Add stakeholders to review your map changes below</p>
                         <!-- Signer Emails Input Container -->
                         <div class="signer-content-container">
                             <div id="signers-container">
                                 <div class="initiator-Data">
                                     <input type="text" id="initiatorName" placeholder="Your Name">
                                 </div>
-                                <div class="signerData">
-                                    <input type="email" id="signerEmail" placeholder="Signer Email">
-                                    <input type="text" id="signerName" placeholder="Signer Name">
+                                <div id="realSignerDataContainer" class="realSignerDataContainer">
+                                    <div class="signerData">
+                                        <input required type="email" id="signerEmail" placeholder="Stakeholder Email">
+                                        <input required type="text" id="signerName" placeholder="Stakeholder Name">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="add-signer-btn" class="email-input" id="addSignerTrigger">
-                            <p>Add Signer</p>
-                        </div>
-                        <div class="add-signer-btn" id="submitSignerTrigger">
-                            <p id="submitSignerCTA">Submit</p>
+                        <div class="sectionCTA">
+                            <div id="removeField" hidden class="add-signer">
+                                <div class="x-holder"><i class="bi bi-x-circle-fill"></i></div>
+                            </div>
+                            <div class="add-signer-btn" class="email-input" id="addSignerTrigger">
+                                <p class="signerCTA">ADD SIGNER</p>
+                            </div>
+                            <div class="add-signer-btn" id="submitSignerTrigger">
+                                <p class="signerCTA" id="submitSignerCTA">SUBMIT</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </form>
+            <hr class="auditNavDivider">
+            <div class="auditNavs">
+                <a class="homeCTA" href="/"><i class="bi bi-house-fill"></i><span>HOME</span></a>
+                <a class="mapCTA" href="./map.html"><i class="bi bi-geo-alt-fill"></i><span>MAPPER</span></a>
+            </div>
         </div>
     </div>
     <script src="./scripts/initiateAudit.js"></script>

@@ -15,7 +15,8 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ]
+    ],
+    "cleanUrls": true
   },
   "emulators": {
     "auth": {

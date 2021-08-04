@@ -5,12 +5,12 @@ a {
 
 .home-body{
   margin:0;
-  background: rgb(2,1,15);
-  background: linear-gradient(90deg, rgba(2,1,15,1) 18%, rgba(41,4,17,1) 47%, rgba(34,11,0,1) 86%);
 }
 /* Home Page Styles */
 .home-nav{
-  background: rgba(0, 0, 0, 0.623);
+  background: rgb(233, 228, 228);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 1px 15px;
+  border-radius:20px;
   overflow: hidden;
   padding: 0.4em;
   backdrop-filter: blur(50px);
@@ -23,7 +23,7 @@ a {
 }
 
 .home-nav-list:hover{
-  color:rgb(45, 210, 240);
+  color:rgb(7, 70, 82);
   cursor: pointer;
 }
 
@@ -37,20 +37,19 @@ a {
 
 .home-right-nav{
   margin-left:400px;
-  color:white;
   font-size: 13px;
   padding-top:1em;
+  color:black;
 }
 
 
 .home-left-nav{
-  color: white;
   font-size: 13px;
+  color:black;
 }
 
 .home-title{
   text-align: center;
-  color: white;
   font-size:40px;
   margin-top:2em;
   font-family: 'Barlow', sans-serif;
@@ -58,9 +57,8 @@ a {
 
 .home-description{
   text-align: center;
-  color: white;
   font-size:18px;
-  font-weight:3px;
+  font-weight:5px;
   margin-top:2em;
   width:70%;
   margin:auto;
@@ -68,16 +66,16 @@ a {
 }
 
 .home-cta{
-  background: transparent;
-  color: white;
+  background: rgb(73, 184, 235);
   padding:1.1em;
-  border: 1px solid gray;
+  border: 1px solid rgb(73, 184, 235);
   border-radius:999px;
   font-family: 'Barlow', sans-serif;
+  color:white;
 }
 
 .home-cta:hover{
-  border:1px solid rgb(45, 210, 240);
+  border:1px solid rgb(7, 70, 82);
   cursor:pointer;
 }
 
@@ -95,27 +93,36 @@ a {
 }
 
 .bi-arrow-right{
-  color:rgb(45, 210, 240);
+  color:white;
   margin-left:1em;
 }
 
-/* initiateAudit Page */
-.add-signer-btn{
-  cursor: pointer;
-  background-color: blue;
-  width: 6em;
-  margin-top:0.9em;
+/* Auth Page */
+.auth-container-center{
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 1em;
+  width: 30%;
+  border-radius: 20px;
+  margin-top:5em;
+  margin-right:auto;
+  margin-left:auto;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(100px);
 }
 
-#signer{
-  display: block;
-  margin-top: 0.9em;
+.login-word{
+  text-align: center;
+  font-family: 'Barlow', sans-serif;
 }
 
-.signerData{
-  width:50%;
-  display:flex;
-  justify-content: space-around;
-  margin-left: 1em;
-  margin-top: 1em;
+.nav-img-logo-login{
+  margin-left: 4em;
+}
+
+.auth-body{
+  margin:0;
+}
+
+.auth__container{
+  width:100%;
 }

@@ -1,0 +1,140 @@
+body{
+    margin:0;
+    height:100%;
+    background: rgb(235,113,12);
+    background: linear-gradient(90deg, rgba(235,113,12,1) 37%, rgba(25,196,174,1) 94%);
+}
+
+a {
+    color: inherit;
+    text-decoration: none; 
+ } 
+
+/* initiateAudit Page */
+.add-signer-btn{
+    cursor: pointer;
+    background: rgb(73, 184, 235);
+    border-radius:30px;
+    width: 6em;
+    margin:1.4em;
+}
+
+.add-signer{
+    cursor: pointer;
+    background: transparent;
+    border-radius:999px;
+    width:3em;
+    margin-top:2.2em;
+}
+
+.bi-x-circle-fill{
+    border-radius: 100%;
+    padding:0.4em;
+    background-color: red;
+    color: white !important;
+    font-size: 15px;
+}
+
+#signer{
+    display: block;
+    margin-top: 0.9em;
+}
+
+.signerData{
+    width:50%;
+    display:flex;
+    justify-content: space-around;
+    margin-left: 1em;
+    margin-top: 1em;
+}
+
+.bi-x-circle-fill{
+    font-size:1em;
+    text-align: center;
+    color:black;
+}
+
+.audit__form__container{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    backdrop-filter: blur(50px);
+    background: rgb(233, 228, 228,0.5);
+    width:70%;
+    margin-left:auto;
+    margin-right:auto;
+    border-radius:20px;
+    padding:2em;
+    position: absolute;
+    top:4em;
+    left:11em;
+}
+
+.audit-logo-container{
+    margin-bottom:0.5em;
+    display:flex;
+    justify-content:center;
+}
+
+.audit-desc{
+    text-align:center;
+    font-family: 'Barlow', sans-serif;
+    font-weight:bolder;
+    color:blue;
+}
+
+.audit-desc-1{
+    text-align:center;
+    font-family: 'Sarabun', sans-serif; 
+    font-weight:bolder;
+    font-size:12px;
+}
+
+.audit-divider{
+    text-align:center;
+    width:50px;
+}
+
+.audit-form{
+    margin-top:1.5em;
+}
+
+.initiator-Data{
+    display:flex;
+    justify-content:center;
+}
+
+.realSignerDataContainer{
+    display:flex;
+    justify-content:center;
+}
+
+.sectionCTA{
+    display:flex;
+    justify-content:center;
+}
+
+.signerCTA{
+    text-align:center;
+    color:white;
+    font-family: 'Barlow', sans-serif;
+    font-size:14px;
+}
+
+#initiatorName,#signerEmail,#signerName{
+    padding:1em;
+    border-radius:99px;
+    background-color:white;
+    border:1px solid white;
+    margin-top:0.6em;
+    font-family: 'Barlow', sans-serif;
+}
+
+.auditNavs{
+    display:flex;
+    justify-content:center;
+}
+
+.homeCTA,.mapCTA{
+    color:black;
+    margin-left:1em;
+    font-family: 'Barlow', sans-serif;
+}

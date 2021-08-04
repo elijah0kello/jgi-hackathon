@@ -15,6 +15,27 @@ document.addEventListener("DOMContentLoaded", function () {
             // Check if app is authenticated
             if (doc.data().appIsAuthenticated == true) {
               console.log("True Block: " + doc.data().appIsAuthenticated);
+              document.getElementById("auth-status-1-a").href = "#";
+              document.getElementById("auth-status-2-a").href =
+                "./dashboard.html";
+              var authStateInd = document.getElementById("auth-status-1");
+              var dash = document.getElementById("auth-status-2");
+              dash.innerHTML = "DASHBOARD";
+              authStateInd.innerHTML = "LOG OUT";
+              authStateInd.addEventListener("click", () => {
+                // code to log you out
+                app
+                  .auth()
+                  .signOut()
+                  .then(() => {
+                    // Sign-out successful.
+                    console.log("Sign out Successful");
+                  })
+                  .catch((error) => {
+                    // An error happened.
+                    console.log(error);
+                  });
+              });
               return;
             } else {
               console.log("Else block: " + doc.data().appIsAuthenticated);

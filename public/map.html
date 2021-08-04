@@ -1,0 +1,43 @@
+<!--
+
+To run this demo, you need to replace 'YOUR_API_KEY' with an API key from the ArcGIS Developer dashboard.
+
+Sign up for a free account and get an API key.
+
+https://developers.arcgis.com/documentation/mapping-apis-and-services/get-started/
+
+ -->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Start Mapping</title>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.20/esri/themes/light/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300&family=Sarabun:wght@100&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./styles/map.css">
+    <script src="https://js.arcgis.com/4.20/"></script>
+    <script src="./scripts/map.js"></script>
+</head>
+
+<body>
+    <div class="map-outer-container">
+        <div class="map-container" id="viewDiv"></div>
+        <div class="map-btn-container">
+            <button class="start-audit-btn"><a href="./initiateAudit.html"><span>START VIRTUAL AUDIT</span></a><i
+                    class="bi bi-arrow-right"></i></button>
+        </div>
+        <div class="map-info">
+            <div>
+                <a class="homeCTA" href="/">HOME</a>
+            </div>
+            <p class="map-para">Use the Editor widget to make changes to the map.</p>
+        </div>
+    </div>
+</body>
+
+</html>
