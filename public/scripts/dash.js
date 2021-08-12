@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let app = firebase.app();
     // Get a reference to the storage service, which is used to create references in your storage bucket
     var storage = firebase.storage();
-    storage.useEmulator("localhost", 9199);
+    // storage.useEmulator("localhost", 9199);
 
     // Create a storage reference from our storage service
     var storageRef = storage.ref();

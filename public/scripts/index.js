@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // alert("Authenticate your app with Docusign");
                 await axios
                   .get(
-                    "http://localhost:5001/master-bruin-319711/us-central1/authenticator"
+                    "https://us-central1-master-bruin-319711.cloudfunctions.net/authenticator"
                   )
                   .then((response) => {
                     console.log(response.data.url);

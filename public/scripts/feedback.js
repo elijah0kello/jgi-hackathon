@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
         var storage = firebase.storage();
-        storage.useEmulator("localhost", 9199);
+        // storage.useEmulator("localhost", 9199);
         // create a storage ref
         var pdfRef = storage.ref(files[0].name);
         //upload file

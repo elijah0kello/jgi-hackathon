@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       try {
         var storage = firebase.storage();
-        storage.useEmulator("localhost", 9199);
+        // storage.useEmulator("localhost", 9199);
         // create a storage ref
         var pdfRef = storage.ref(files[0].name);
         //upload file
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       var config = {
         method: "post",
-        url: "http://localhost:5001/master-bruin-319711/us-central1/initiateSigning",
+        url: "https://us-central1-master-bruin-319711.cloudfunctions.net/initiateSigning",
         headers: {
           "Content-Type": "application/json",
         },
