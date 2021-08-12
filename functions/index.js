@@ -1,16 +1,22 @@
+/* eslint-disable quote-props */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable indent */
+/* eslint-disable new-cap */
+/* eslint-disable require-jsdoc */
+/* eslint-disable max-len */
 const functions = require("firebase-functions");
 const dsConfig = require("./config/index").config;
 const axios = require("axios");
 const FormData = require("form-data");
 const docusign = require("docusign-esign");
 const { Firestore } = require("@google-cloud/firestore");
-var admin = require("firebase-admin");
+const admin = require("firebase-admin");
 const { Storage } = require("@google-cloud/storage");
 const fs = require("fs");
 const path = require("path");
 
 // Initilaize Firebase
-var serviceAccount = require("./config/serviceAccountKey.json");
+const serviceAccount = require("./config/serviceAccountKey.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -36,20 +42,20 @@ exports.authenticator = functions.https.onRequest((request, response) => {
 
   // Set the response header
   response.setHeader("Content-Type", "Application/Json");
-  response.setHeader("Access-Control-Allow-Origin", `${dsConfig.appUrl}`);
+  response.setHeader("Access-Control-Allow-Origin", "*");
   response.send(JSON.stringify({ url: consentUrl }));
 });
 
 // // Function for Docusign to receive the access token
 exports.getToken = functions.https.onRequest(async (resquest, response) => {
-  var data = new FormData();
+  const data = new FormData();
   data.append("grant_type", "urn:ietf:params:oauth:grant-type:jwt-bearer");
   data.append(
     "assertion",
-    "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI4NmI2NmU3Mi03M2QzLTRlNmMtODQ2Yi1lMzhiZTU3M2I4NmYiLCJzdWIiOiI0MjQyNzJkMS00MjkzLTQwMTUtYjFhOS1jNjQ1YzFlMTkyNWYiLCJhdWQiOiJhY2NvdW50LWQuZG9jdXNpZ24uY29tIiwiaWF0IjoxNjI4MDEwMDEwLCJleHAiOjE4ODA0NzA4MTAsInNjb3BlIjoic2lnbmF0dXJlIn0.FNwM9np3e1duyaZ15zrHGKaj4Li5517VS0aEZY3Jp4Vlm9GwMsTReRMrA5pOPAHhi0wXTRdKDthZFlVfJICTNIHAJflU6htX5XetKqGhZ75toZgPW6eAAs59TwO0BhRJrNIoqgNAcfMpmSW2tU-l3hfHbh4NazXUVIT11ocSIbaLBvDu2va8HquVNpV31G98xNA_WvWJ2vOmSbYg_-HqLRsdAWHp8jYNN_aSZnkLgCdzCDLOUmUm3-dPI0PIS_vDVwvhdkNbPx31OvbMFyczPsI0CvR6ookcUuhReWvfg5QcG5HJcLgBuUAGp56bke8Z9v2zwDaVs1P_s1RgvQmclg"
+    "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI4NmI2NmU3Mi03M2QzLTRlNmMtODQ2Yi1lMzhiZTU3M2I4NmYiLCJzdWIiOiI0MjQyNzJkMS00MjkzLTQwMTUtYjFhOS1jNjQ1YzFlMTkyNWYiLCJhdWQiOiJhY2NvdW50LWQuZG9jdXNpZ24uY29tIiwiaWF0IjoxNjI4MDEwMDEwLCJleHAiOjE4ODA0NzA4MTAsInNjb3BlIjoic2lnbmF0dXJlIn0.FNwM9np3e1duyaZ15zrHGKaj4Li5517VS0aEZY3Jp4Vlm9GwMsTReRMrA5pOPAHhi0wXTRdKDthZFlVfJICTNIHAJflU6htX5XetKqGhZ75toZgPW6eAAs59TwO0BhRJrNIoqgNAcfMpmSW2tU-l3hfHbh4NazXUVIT11ocSIbaLBvDu2va8HquVNpV31G98xNA_WvWJ2vOmSbYg_-HqLRsdAWHp8jYNN_aSZnkLgCdzCDLOUmUm3-dPI0PIS_vDVwvhdkNbPx31OvbMFyczPsI0CvR6ookcUuhReWvfg5QcG5HJcLgBuUAGp56bke8Z9v2zwDaVs1P_s1RgvQmclg",
   );
 
-  var config = {
+  const config = {
     method: "post",
     url: dsConfig.dsOauthServer + "/oauth/token",
     headers: {
@@ -59,10 +65,12 @@ exports.getToken = functions.https.onRequest(async (resquest, response) => {
   };
 
   axios(config)
-    .then(async function (res) {
+    .then(async function(res) {
       // console.log("Token Acquisiton Response: " + JSON.stringify(res.data));
-      var issueDate = new Date();
-      var expirationDate = issueDate.setSeconds(issueDate.getSeconds() + 3600);
+      const issueDate = new Date();
+      const expirationDate = issueDate.setSeconds(
+        issueDate.getSeconds() + 3600,
+      );
       // console.log(JSON.stringify(response.data));
 
       // Store the token
@@ -77,13 +85,13 @@ exports.getToken = functions.https.onRequest(async (resquest, response) => {
       // Set response Headers
       console.log("Token acquisition Successful in GET TOKEN CLOUD FUNC");
       response.setHeader("Content-Type", "Application/Json");
-      response.setHeader("Access-Control-Allow-Origin", `${dsConfig.appUrl}`);
+      response.setHeader("Access-Control-Allow-Origin", "*");
       response.send(JSON.stringify({ status: true }));
     })
-    .catch(function (error) {
+    .catch(function(error) {
       console.log("Token acquisition Failed in GET TOKEN CLOUD FUNC" + error);
       response.setHeader("Content-Type", "Application/Json");
-      response.setHeader("Access-Control-Allow-Origin", `${dsConfig.appUrl}`);
+      response.setHeader("Access-Control-Allow-Origin", "*");
       response.send(JSON.stringify({ status: false, error: error }));
     });
 });
@@ -122,9 +130,9 @@ function document1(data) {
 const eSignFunc = async (basePath, accessToken, res, envelope) => {
   try {
     // console.log(JSON.stringify(envelope));
-    var thedata = JSON.stringify(envelope);
+    const thedata = JSON.stringify(envelope);
 
-    var config = {
+    const config = {
       method: "post",
       url: `${basePath}/restapi/v2.1/accounts/${dsConfig.apiAccountId}/envelopes`,
       headers: {
@@ -138,7 +146,7 @@ const eSignFunc = async (basePath, accessToken, res, envelope) => {
     // Step 2. call Envelopes::create API method
     // Exceptions will be caught by the calling function
     axios(config)
-      .then(function (response) {
+      .then(function(response) {
         // console.log(JSON.stringify(response.data));
         // console.log(`Envelope was created. EnvelopeId ${envelopeId}`);
         if (response.data.status == "sent") {
@@ -156,28 +164,28 @@ const eSignFunc = async (basePath, accessToken, res, envelope) => {
           res.send(JSON.stringify({ status: true }));
         } else {
           response.send(
-            JSON.stringify({ status: false, error: "Call to the API failed" })
+            JSON.stringify({ status: false, error: "Call to the API failed" }),
           );
         }
       })
-      .catch(function (error) {
+      .catch(function(error) {
         // console.log(error);
         res.send(
           JSON.stringify({
             status: false,
             error: `Call to the API rasied exception${error}`,
-          })
+          }),
         );
       });
   } catch (error) {
     console.log("DS API CALL FAILED: " + error);
     res.send(
-      JSON.stringify({ status: false, error: "DS API CALL FAILED: " + error })
+      JSON.stringify({ status: false, error: "DS API CALL FAILED: " + error }),
     );
   }
 };
 
-//Make envelope Function
+// Make envelope Function
 function makeEnvelope(basePath, accessToken, data, res) {
   try {
     // define the Google Cloud Storage bucket name
@@ -193,6 +201,7 @@ function makeEnvelope(basePath, accessToken, data, res) {
     const storage = new Storage();
 
     // define the function for file download
+    // eslint-disable-next-line no-async-promise-executor
     const downloadFile = new Promise(async (resolve, rejected) => {
       // passing the options
       const options = {
@@ -211,7 +220,7 @@ function makeEnvelope(basePath, accessToken, data, res) {
             " coming from bucket " +
             bucketName +
             " has been downloaded to " +
-            destFilename
+            destFilename,
         );
 
         resolve();
@@ -224,16 +233,16 @@ function makeEnvelope(basePath, accessToken, data, res) {
     // call the download function and be ready to catch errors
     downloadFile
       .then(() => {
-        var pdfFromStorage;
+        let pdfFromStorage;
         try {
           setTimeout(() => {
             pdfFromStorage = fs.readFileSync(`docs/${data.docName}`);
-            let env = new docusign.EnvelopeDefinition();
+            const env = new docusign.EnvelopeDefinition();
             env.emailSubject = "Please sign this document set";
             // add the documents
-            let doc1 = new docusign.Document(),
-              doc1b64 = Buffer.from(document1(data)).toString("base64"),
-              doc2b64 = Buffer.from(pdfFromStorage).toString("base64");
+            const doc1 = new docusign.Document();
+            const doc1b64 = Buffer.from(document1(data)).toString("base64");
+            const doc2b64 = Buffer.from(pdfFromStorage).toString("base64");
 
             doc1.documentBase64 = doc1b64;
             doc1.name = "Order acknowledgement"; // can be different from actual file name
@@ -242,7 +251,7 @@ function makeEnvelope(basePath, accessToken, data, res) {
             // The order in the docs array determines the order in the envelope
 
             // constructing the pdf
-            let doc2 = new docusign.Document.constructFromObject({
+            const doc2 = new docusign.Document.constructFromObject({
               documentBase64: doc2b64,
               name: "Map Changes", // can be different from actual file name
               fileExtension: "pdf",
@@ -253,9 +262,9 @@ function makeEnvelope(basePath, accessToken, data, res) {
             env.documents = [doc1, doc2];
             // create a signer recipient to sign the document, identified by name and email
             // We're setting the parameters via the object constructor
-            var signersArray = [];
+            const signersArray = [];
             console.log(JSON.stringify(data.signers));
-            for (var i = 0; i < data.signers.length; i++) {
+            for (let i = 0; i < data.signers.length; i++) {
               signersArray[i] = docusign.Signer.constructFromObject({
                 email: data.signers[i].email,
                 name: data.signers[i].name,
@@ -263,7 +272,7 @@ function makeEnvelope(basePath, accessToken, data, res) {
                 routingOrder: `${i + 1}`,
               });
               console.log(
-                "EMAIL Example data in loop: " + data.signers[i].email
+                "EMAIL Example data in loop: " + data.signers[i].email,
               );
               console.log("NAME Example data in loop: " + data.signers[i].name);
             }
@@ -275,7 +284,7 @@ function makeEnvelope(basePath, accessToken, data, res) {
             // documents for matching anchor strings. So the
             // signHere2 tab will be used in both document 2 and 3 since they
             // use the same anchor string for their "signer 1" tabs.
-            let signHere1 = docusign.SignHere.constructFromObject({
+            const signHere1 = docusign.SignHere.constructFromObject({
               anchorString: "**signature_1**",
               anchorYOffset: "10",
               anchorUnits: "pixels",
@@ -283,19 +292,19 @@ function makeEnvelope(basePath, accessToken, data, res) {
             });
             // Tabs are set per recipient / signer
             // Create the tab
-            let signerTab = docusign.Tabs.constructFromObject({
+            const signerTab = docusign.Tabs.constructFromObject({
               signHereTabs: [signHere1],
             });
             // Assign the tabs
-            for (var j = 0; j < signersArray.length; j++) {
+            for (let j = 0; j < signersArray.length; j++) {
               signersArray[j].tabs = signerTab;
             }
 
             console.log(
-              "After tab assignment: " + JSON.stringify(signersArray)
+              "After tab assignment: " + JSON.stringify(signersArray),
             );
             // Add the recipients to the envelope object
-            let recipients = docusign.Recipients.constructFromObject({
+            const recipients = docusign.Recipients.constructFromObject({
               signers: signersArray,
             });
             env.recipients = recipients;
@@ -322,7 +331,7 @@ function makeEnvelope(basePath, accessToken, data, res) {
 
 // Function to get the user info
 const getUserInfo = async (theToken, data, response) => {
-  var config = {
+  const config = {
     method: "get",
     url: dsConfig.dsOauthServer + "/oauth/userinfo",
     headers: {
@@ -330,8 +339,8 @@ const getUserInfo = async (theToken, data, response) => {
     },
   };
   await axios(config)
-    .then(function (res) {
-      let userData = res.data;
+    .then(function(res) {
+      const userData = res.data;
       console.log(userData.accounts[0].base_uri);
       try {
         makeEnvelope(userData.accounts[0].base_uri, theToken, data, response);
@@ -343,7 +352,7 @@ const getUserInfo = async (theToken, data, response) => {
         response.send(JSON.stringify({ status: false, error: error }));
       }
     })
-    .catch(function (error) {
+    .catch(function(error) {
       console.log(error);
       response.send(JSON.stringify({ status: false, error: error }));
     });
@@ -359,7 +368,7 @@ const retrieveToken = (data, response) => {
         console.log("Retrieve:  " + JSON.stringify(data.docName));
         try {
           getUserInfo(doc.data().acc_token, data, response);
-          var mine = true;
+          // const mine = true;
           // response.send(JSON.stringify({ status: mine }));
         } catch (error) {
           console.log(error);
@@ -368,7 +377,7 @@ const retrieveToken = (data, response) => {
       } else {
         console.log("Doc doesn't exist");
         response.send(
-          JSON.stringify({ status: true, error: "Doc doesn't exist" })
+          JSON.stringify({ status: true, error: "Doc doesn't exist" }),
         );
       }
     })
@@ -385,7 +394,7 @@ exports.initiateSigning = functions
   .https.onRequest(async (request, response) => {
     response.setHeader("Content-Type", "Application/Json");
     response.setHeader("Access-Control-Allow-Headers", "*");
-    response.setHeader("Access-Control-Allow-Origin", `${dsConfig.appUrl}`);
+    response.setHeader("Access-Control-Allow-Origin", "*");
     if (request.method == "POST") {
       const data = request.body;
       const docRef = firestore.doc("environment/config");
@@ -393,14 +402,18 @@ exports.initiateSigning = functions
         .get()
         .then(async (doc) => {
           if (doc.exists) {
-            var now = new Date();
+            const now = new Date();
             // Check token expiration
             if (now >= doc.data().tokenExpirationDate) {
-              /**********Token Acquisition**********/
+              /** ********Token Acquisition**********/
+              let tokenUri;
+              if (dsConfig.production) {
+                tokenUri = dsConfig.functionEndPointPRDOD;
+              } else {
+                tokenUri = dsConfig.functionEndPointDEV;
+              }
               await axios
-                .get(
-                  "http://localhost:5001/master-bruin-319711/us-central1/getToken"
-                )
+                .get(tokenUri)
                 .then((res) => {
                   if (res.data.status) {
                     console.log("Data from clent" + data.docName);
@@ -414,7 +427,7 @@ exports.initiateSigning = functions
                         JSON.stringify({
                           status: false,
                           error: "Call to retrieve token" + error,
-                        })
+                        }),
                       );
                     }
                   } else {
@@ -424,7 +437,7 @@ exports.initiateSigning = functions
                       JSON.stringify({
                         status: false,
                         reason: "Token acquisition was not successful",
-                      })
+                      }),
                     );
                   }
                 })
@@ -434,10 +447,10 @@ exports.initiateSigning = functions
                     JSON.stringify({
                       status: false,
                       error: "Firestore promise" + error,
-                    })
+                    }),
                   );
                 });
-              /**********Token Acquisition**********/
+              /** ********Token Acquisition**********/
             } else {
               console.log("Using Old token");
               // console.log("Data from clent" + JSON.stringify(data.docName));
@@ -450,7 +463,7 @@ exports.initiateSigning = functions
           } else {
             console.log("No such doc");
             response.send(
-              JSON.stringify({ status: false, error: "No such doc" })
+              JSON.stringify({ status: false, error: "No such doc" }),
             );
           }
         })
@@ -460,7 +473,7 @@ exports.initiateSigning = functions
         });
     } else {
       response.send(
-        JSON.stringify({ status: false, error: "unsupported method" })
+        JSON.stringify({ status: false, error: "unsupported method" }),
       );
     }
   });

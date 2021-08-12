@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   env: {
-    es8: true,
+    es2020: true,
     node: true,
   },
   extends: ["eslint:recommended", "google"],
