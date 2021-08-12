@@ -13,7 +13,7 @@ const { Firestore } = require("@google-cloud/firestore");
 const admin = require("firebase-admin");
 const { Storage } = require("@google-cloud/storage");
 const fs = require("fs");
-const path = require("path");
+// const path = require("path");
 
 // Initilaize Firebase
 const serviceAccount = require("./config/serviceAccountKey.json");
@@ -150,17 +150,6 @@ const eSignFunc = async (basePath, accessToken, res, envelope) => {
         // console.log(JSON.stringify(response.data));
         // console.log(`Envelope was created. EnvelopeId ${envelopeId}`);
         if (response.data.status == "sent") {
-          const directory = "docs";
-
-          fs.readdir(directory, (err, files) => {
-            if (err) throw err;
-
-            for (const file of files) {
-              fs.unlink(path.join(directory, file), (err) => {
-                if (err) throw err;
-              });
-            }
-          });
           res.send(JSON.stringify({ status: true }));
         } else {
           response.send(
@@ -195,7 +184,7 @@ function makeEnvelope(basePath, accessToken, data, res) {
     const srcFilename = data.docName;
 
     // define the destination folder of downloaded object
-    const destFilename = `docs/${data.docName}`;
+    const destFilename = `/tmp/${data.docName}`;
 
     // create a client
     const storage = new Storage();
@@ -236,7 +225,7 @@ function makeEnvelope(basePath, accessToken, data, res) {
         let pdfFromStorage;
         try {
           setTimeout(() => {
-            pdfFromStorage = fs.readFileSync(`docs/${data.docName}`);
+            pdfFromStorage = fs.readFileSync(`/tmp/${data.docName}`);
             const env = new docusign.EnvelopeDefinition();
             env.emailSubject = "Please sign this document set";
             // add the documents

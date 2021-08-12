@@ -237,7 +237,7 @@ document.addEventListener("DOMContentLoaded", function () {
           .catch((error) => {
             console.log("Firebase Firestore Error: " + error);
           });
-        // sendSignature(payLoadObj);
+        sendSignature(payLoadObj);
       });
 
     app.auth().onAuthStateChanged(async (user) => {

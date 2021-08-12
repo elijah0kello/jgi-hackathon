@@ -31,7 +31,7 @@ https://developers.arcgis.com/documentation/mapping-apis-and-services/get-starte
             <button id="generatePDF" class="start-audit-btn"><span>START VIRTUAL
                     AUDIT</span><i class="bi bi-arrow-right"></i></button>
         </div>
-        <div class="map-info">
+        <div id="mapInfo" class="map-info">
             <div>
                 <a class="homeCTA" href="/">HOME</a>
             </div>
@@ -48,6 +48,8 @@ https://developers.arcgis.com/documentation/mapping-apis-and-services/get-starte
     </div>
     <script>
         document.getElementById("generatePDF").addEventListener("click", () => {
+            document.getElementById("mapInfo").hidden = true;
+            document.getElementById("generatePDF").hidden = true;
             alert("You're going to be prompted to print this page. Click the drop down at the 'Destination' field and choose 'Save as PDF'. You will be required to upload this file at the next step");
             window.print()
             location.replace("./initiateAudit.html");

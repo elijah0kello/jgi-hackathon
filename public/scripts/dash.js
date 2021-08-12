@@ -321,7 +321,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 var Message = document.createElement("p");
                 Message.innerHTML = element.data().comment;
                 Message.className = "audit-message";
-                MessageDiv.appendChild(message);
+                MessageDiv.appendChild(Message);
                 var fileRef = storageRef.child(`${element.data().fileName}`);
                 fileRef
                   .getDownloadURL()
