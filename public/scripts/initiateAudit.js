@@ -179,6 +179,9 @@ document.addEventListener("DOMContentLoaded", function () {
         payLoadObj.initiatorName =
           document.getElementById("initiatorName").value;
         payLoadObj.docName = fileName;
+        payLoadObj.isFinal = document.getElementById("finalAudit").checked
+          ? true
+          : false;
         console.log(JSON.stringify(payLoadObj));
         // call the sendSignature function
         var docDate = Date.now();
@@ -234,7 +237,7 @@ document.addEventListener("DOMContentLoaded", function () {
           .catch((error) => {
             console.log("Firebase Firestore Error: " + error);
           });
-        sendSignature(payLoadObj);
+        // sendSignature(payLoadObj);
       });
 
     app.auth().onAuthStateChanged(async (user) => {

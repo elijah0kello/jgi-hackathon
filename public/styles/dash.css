@@ -208,6 +208,7 @@ list-style: none;
     font-size: 20px;
     color:rgb(29, 27, 27);
     font-weight:bold;
+    text-align: center;
 }   
 
 .feedback-cont{
@@ -235,7 +236,6 @@ list-style: none;
 
 .feedback-item{
     color: rgb(0, 0, 0);
-    padding-top: 0.2em;
     padding-left: 0.5em;
     font-family: 'Sarabun', sans-serif;
     cursor: pointer;
@@ -270,6 +270,7 @@ list-style: none;
     border-radius:20px;
     height: 83%;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    overflow-y: scroll;
 }
 
 .sendoutFinalContainer{
@@ -277,13 +278,14 @@ list-style: none;
     width:95%;
     margin-left:auto;
     margin-right:auto;
+    overflow-y: scroll;
 }
 
 .bi-arrow-left-circle{
     font-size: 25px;
 }
 
-.audit-message-link,.audit-message{
+.audit-message-link,.audit-message,.make-edit{
     font-family: 'Sarabun', sans-serif;
 }
 
@@ -297,4 +299,54 @@ list-style: none;
 
 .audit-message-container-me{
     border-left: 2px solid red;
+}
+
+.bi-patch-check-fill,.bi-hourglass-split,.patch-check{
+    color:rgb(73, 184, 235);
+}
+
+.make-edit{
+    margin-left: 12em;
+}
+
+.auditHeading{
+    text-align: center;
+    font-family: 'Sarabun', sans-serif;
+    text-transform: uppercase;
+}
+
+.message-input-container{
+    width:80%;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: rgba(161, 37, 43, 0.162);
+    border-radius: 999px;
+    padding: 0.5em;
+}
+
+.message-reply{
+    width: 80%;
+    padding: 0.4em;
+    border: 1px solid transparent;
+    background-color:transparent;
+    font-family: 'Sarabun',sans-serif;
+    font-size: 15px;
+}
+
+#messageSubmitBTN{
+    font-size:1.5em;
+    cursor: pointer;
+}
+
+.audit-message-container-feedback{
+    border-left: 2px solid blue;
+}
+
+.final-audit{
+    display:block;
+    font-family: 'Sarabun', sans-serif;
+    text-align: center;
+    font-size:14px;
+    color:green;
+    font-weight: bolder;
 }

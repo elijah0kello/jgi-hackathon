@@ -98,6 +98,7 @@ a {
 .initiator-Data{
     display:flex;
     justify-content:center;
+    margin-top:0.5em;
 }
 
 .realSignerDataContainer{
