@@ -4,6 +4,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var db = firebase.firestore(app);
 
+    const changeNav = () => {
+      document.getElementById("auth-status-1-a").href = "#";
+      document.getElementById("auth-status-2-a").href = "./dashboard.html";
+      var authStateInd = document.getElementById("auth-status-1");
+      var dash = document.getElementById("auth-status-2");
+      dash.innerHTML = "DASHBOARD";
+      dash.addEventListener("click", () => {
+        location.assign("/dashboard.html");
+      });
+      authStateInd.innerHTML = "LOG OUT";
+      authStateInd.addEventListener("click", () => {
+        // code to log you out
+        app
+          .auth()
+          .signOut()
+          .then(() => {
+            // Sign-out successful.
+            console.log("Sign out Successful");
+          })
+          .catch((error) => {
+            // An error happened.
+            console.log(error);
+          });
+      });
+    };
+
     // Function to check whether the app is authenticated
     const checkApp = (adminStatus) => {
       var docref = db.collection("environment").doc("config");
@@ -15,33 +41,13 @@ document.addEventListener("DOMContentLoaded", function () {
             // Check if app is authenticated
             if (doc.data().appIsAuthenticated == true) {
               console.log("True Block: " + doc.data().appIsAuthenticated);
-              document.getElementById("auth-status-1-a").href = "#";
-              document.getElementById("auth-status-2-a").href =
-                "./dashboard.html";
-              var authStateInd = document.getElementById("auth-status-1");
-              var dash = document.getElementById("auth-status-2");
-              dash.innerHTML = "DASHBOARD";
-              authStateInd.innerHTML = "LOG OUT";
-              authStateInd.addEventListener("click", () => {
-                // code to log you out
-                app
-                  .auth()
-                  .signOut()
-                  .then(() => {
-                    // Sign-out successful.
-                    console.log("Sign out Successful");
-                  })
-                  .catch((error) => {
-                    // An error happened.
-                    console.log(error);
-                  });
-              });
+              changeNav();
               return;
             } else {
               console.log("Else block: " + doc.data().appIsAuthenticated);
               //   Check if logged in user is admin
               if (adminStatus) {
-                alert("Authenticate your app with Docusign");
+                // alert("Authenticate your app with Docusign");
                 await axios
                   .get(
                     "http://localhost:5001/master-bruin-319711/us-central1/authenticator"
@@ -51,9 +57,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     window.location.replace(response.data.url);
                   });
               } else {
-                alert(
-                  "Please contact your system administrator to authenticate with Docusign"
-                );
+                changeNav();
+                // alert(
+                //   "Please contact your system administrator to authenticate with Docusign"
+                // );
               }
             }
           } else {
@@ -68,6 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Function to check whether email is for admin
     const checkUser = (email_data) => {
+      console.log(email_data);
       var docRef = db.collection("environment").doc("config");
 
       docRef
@@ -75,6 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then((doc) => {
           if (doc.exists) {
             var isAdmin = false;
+            console.log(doc.data().admin);
             if (doc.data().admin == email_data) {
               isAdmin = true;
               checkApp(isAdmin);
@@ -93,7 +102,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     app.auth().onAuthStateChanged(async (user) => {
       if (user) {
-        checkUser(user.email); //Check whether the email is for the admin
+        setTimeout(() => {
+          checkUser(user.email);
+        }, 6000); //Check whether the email is for the admin
       } else {
         location.replace("/auth.html");
       }

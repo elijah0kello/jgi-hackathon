@@ -40,11 +40,13 @@ body,
     width: 280px;
     font-weight:bolder;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius:20px;
 }
 .start-audit-btn{
-    background:rgb(73, 184, 235);
+    background: rgb(226,102,0);
+    background: linear-gradient(90deg, rgba(226,102,0,1) 32%, rgba(0,52,163,1) 71%);
     padding:1.1em;
-    border: 1px solid rgb(73, 184, 235);
+    border: 1px solid transparent;
     border-radius:999px;
     font-family: 'Barlow', sans-serif;
     color:white;

@@ -34,3 +34,4 @@ require([
   // Add widget to the view
   view.ui.add(editor, "top-right");
 });
+

@@ -1,0 +1,8 @@
+{
+    "dsintegrationKey":"{INTEGRATION KEY}",
+    "production": false,
+    "appUrl":"{APP URL}",
+    "privateKeyLocation":  "{PATH TO PRIVATE KEY}",
+    "apiUsername":"{DS API USERNAME}",
+    "apiAccountId":"{ACCOUNT ID}"
+}

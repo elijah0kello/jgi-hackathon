@@ -12,7 +12,7 @@ https://developers.arcgis.com/documentation/mapping-apis-and-services/get-starte
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Start Mapping</title>
+    <title>EDIT MAP</title>
     <link rel="stylesheet" href="https://js.arcgis.com/4.20/esri/themes/light/main.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,8 +28,8 @@ https://developers.arcgis.com/documentation/mapping-apis-and-services/get-starte
     <div class="map-outer-container">
         <div class="map-container" id="viewDiv"></div>
         <div id="map-trigger" class="map-btn-container">
-            <button id="generatePDF" class="start-audit-btn"><span>START VIRTUAL
-                    AUDIT</span><i class="bi bi-arrow-right"></i></button>
+            <button id="generatePDF" class="start-audit-btn"><span>SUBMIT EDITS</span><i
+                    class="bi bi-arrow-right"></i></button>
         </div>
         <div class="map-info">
             <div>
@@ -40,8 +40,8 @@ https://developers.arcgis.com/documentation/mapping-apis-and-services/get-starte
                 put the
                 map back at the appropriate zoom level. Make sure your changes are not blocked by any of the wigdets.
                 <br>
-                <br><span style="color:red;">Make sure the shaded region is at the far left of the
-                    'START VIRTUAL AUDIT'
+                <br> <span style="color:red;">Make sure the right part of shaded region is at the far left of the
+                    'SUBMIT EDITS'
                     button Thank You!</span>
             </p>
         </div>
@@ -49,10 +49,8 @@ https://developers.arcgis.com/documentation/mapping-apis-and-services/get-starte
     <script>
         document.getElementById("generatePDF").addEventListener("click", () => {
             alert("You're going to be prompted to print this page. Click the drop down at the 'Destination' field and choose 'Save as PDF'. You will be required to upload this file at the next step");
-            window.print()
-            location.replace("./initiateAudit.html");
-
-
+            window.print();
+            location.assign("./feedback.html");
         });
     </script>
 

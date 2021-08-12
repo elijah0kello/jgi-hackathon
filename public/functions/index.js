@@ -44,10 +44,7 @@ exports.authenticator = functions.https.onRequest((request, response) => {
 exports.getToken = functions.https.onRequest(async (resquest, response) => {
   var data = new FormData();
   data.append("grant_type", "urn:ietf:params:oauth:grant-type:jwt-bearer");
-  data.append(
-    "assertion",
-    "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI4NmI2NmU3Mi03M2QzLTRlNmMtODQ2Yi1lMzhiZTU3M2I4NmYiLCJzdWIiOiI0MjQyNzJkMS00MjkzLTQwMTUtYjFhOS1jNjQ1YzFlMTkyNWYiLCJhdWQiOiJhY2NvdW50LWQuZG9jdXNpZ24uY29tIiwiaWF0IjoxNjI4MDEwMDEwLCJleHAiOjE4ODA0NzA4MTAsInNjb3BlIjoic2lnbmF0dXJlIn0.FNwM9np3e1duyaZ15zrHGKaj4Li5517VS0aEZY3Jp4Vlm9GwMsTReRMrA5pOPAHhi0wXTRdKDthZFlVfJICTNIHAJflU6htX5XetKqGhZ75toZgPW6eAAs59TwO0BhRJrNIoqgNAcfMpmSW2tU-l3hfHbh4NazXUVIT11ocSIbaLBvDu2va8HquVNpV31G98xNA_WvWJ2vOmSbYg_-HqLRsdAWHp8jYNN_aSZnkLgCdzCDLOUmUm3-dPI0PIS_vDVwvhdkNbPx31OvbMFyczPsI0CvR6ookcUuhReWvfg5QcG5HJcLgBuUAGp56bke8Z9v2zwDaVs1P_s1RgvQmclg"
-  );
+  data.append("assertion", "{ASSERTION}");
 
   var config = {
     method: "post",
@@ -130,8 +127,7 @@ const eSignFunc = async (basePath, accessToken, res, envelope) => {
       headers: {
         Authorization: "Bearer " + accessToken,
         "Content-Type": "application/json",
-        Cookie:
-          "BIGipDocuSign_Demo=!Yp0hzI6BhQgkRkylGUtBI6+PACSoFsHWmbndIYXexV+4Pcl3DK1kyN4yMG3tOW+1IomdnW9ufl8jMpk=",
+        Cookie: "{COOKIE}",
       },
       data: thedata,
     };
@@ -398,9 +394,7 @@ exports.initiateSigning = functions
             if (now >= doc.data().tokenExpirationDate) {
               /**********Token Acquisition**********/
               await axios
-                .get(
-                  "http://localhost:5001/master-bruin-319711/us-central1/getToken"
-                )
+                .get("{GET TOKEN ENDPOINT}")
                 .then((res) => {
                   if (res.data.status) {
                     console.log("Data from clent" + data.docName);

@@ -3,6 +3,41 @@ document.addEventListener("DOMContentLoaded", function () {
     // initialise firebase
     let app = firebase.app();
 
+    // Sending the pdf to storage
+    var files, fileName;
+    document.getElementById("uploadBTN").addEventListener("change", (e) => {
+      document.getElementById("upload").hidden = false;
+      files = e.target.files;
+      console.log(files[0]);
+      var theDate = Date.now();
+      console.log(theDate);
+      // fileName = app.auth().currentUser.email;
+      fileName = JSON.stringify(theDate) + ".pdf";
+      Object.defineProperty(files[0], "name", {
+        writable: true,
+        value: fileName,
+      });
+      files[0].name = fileName;
+      console.log(files[0].name);
+      var extension = files[0].name.split(".").pop();
+      console.log(extension);
+
+      try {
+        var storage = firebase.storage();
+        storage.useEmulator("localhost", 9199);
+        // create a storage ref
+        var pdfRef = storage.ref(files[0].name);
+        //upload file
+        pdfRef.put(files[0]).then((snapshot) => {
+          document.getElementById("submitSignerTrigger").hidden = false;
+          document.getElementById("upload").innerHTML = "Done";
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+
+    // Remove an input field
     document.getElementById("removeField").addEventListener("click", () => {
       var fieldContainer = document.getElementById("signers-container");
       var containerChildren = fieldContainer.childNodes;
@@ -29,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         newNameInput.type = "text";
         newNameInput.id = "signerName";
-        newNameInput.placeholder = "Another Stakeholder's Name";
+        newNameInput.placeholder = "Another Stakeholder's Full Name";
         newNameInput.className = "name-input";
         newNameInput.required = true;
 
@@ -57,7 +92,6 @@ document.addEventListener("DOMContentLoaded", function () {
         url: "http://localhost:5001/master-bruin-319711/us-central1/initiateSigning",
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Headers": "*",
         },
         data: data,
       };
@@ -65,6 +99,13 @@ document.addEventListener("DOMContentLoaded", function () {
       axios(config)
         .then(function (response) {
           console.log(JSON.stringify(response.data));
+          if (response.data.status) {
+            location.replace("/dashboard.html");
+          } else {
+            if (alert("Something went wrong: Please try again")) {
+              // location.replace("/initiatiteAudit.html");
+            }
+          }
         })
         .catch(function (error) {
           console.log(error);
@@ -137,8 +178,62 @@ document.addEventListener("DOMContentLoaded", function () {
         payLoadObj.initiatorEmail = authedUser.email;
         payLoadObj.initiatorName =
           document.getElementById("initiatorName").value;
+        payLoadObj.docName = fileName;
         console.log(JSON.stringify(payLoadObj));
         // call the sendSignature function
+        var docDate = Date.now();
+        var docName = JSON.stringify(docDate);
+
+        app
+          .firestore()
+          .collection("environment")
+          .doc("counter")
+          .get()
+          .then((doc) => {
+            app
+              .firestore()
+              .collection("audits")
+              .doc(`${docName}`)
+              .set({
+                initiator: app.auth().currentUser.email,
+                name: document.getElementById("auditName").value,
+                id: doc.data().auditPK + 1,
+                isComplete: false,
+                fileName: fileName,
+                time: Date.now(),
+              });
+
+            app
+              .firestore()
+              .collection("docNames")
+              .doc(`Doc ${docName}`)
+              .set({
+                id: doc.data().auditPK + 1,
+                docName: docName,
+              });
+
+            app
+              .firestore()
+              .collection("environment")
+              .doc("counter")
+              .set({ auditPK: doc.data().auditPK + 1 }, { merge: true });
+
+            signersArray.forEach((element) => {
+              app
+                .firestore()
+                .collection("audits")
+                .doc(`${docName}`)
+                .collection("stakeholders")
+                .doc(`${element.name}`)
+                .set({
+                  email: element.email,
+                  name: element.name,
+                });
+            });
+          })
+          .catch((error) => {
+            console.log("Firebase Firestore Error: " + error);
+          });
         sendSignature(payLoadObj);
       });
 

@@ -15,7 +15,6 @@
     <!-- include only the Firebase features as you need -->
     <script defer src="/__/firebase/8.7.1/firebase-auth.js"></script>
     <script defer src="/__/firebase/8.7.1/firebase-firestore.js"></script>
-    <script defer src="/__/firebase/8.7.1/firebase-messaging.js"></script>
     <script defer src="/__/firebase/8.7.1/firebase-storage.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- 
@@ -23,7 +22,7 @@
         to avoid connecting the SDK to running emulators.
       -->
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-    <title>Start Virtual Audit</title>
+    <title>SUBMIT YOUR FEEDBACK</title>
 </head>
 
 <body>
@@ -37,23 +36,23 @@
             <form class="audit-form" action="" method="POST">
                 <div class="audit__input__container">
                     <div class="left-input-container">
-                        <p class="audit-desc">ADD STAKEHOLDER EMAILS</p>
+                        <p class="audit-desc">ADD YOUR COMMENTS</p>
                         <!-- <hr class="audit-divider"> -->
                         <!-- <p class="audit-desc-1">Add stakeholders to review your map changes below</p> -->
                         <!-- Signer Emails Input Container -->
                         <div class="signer-content-container">
                             <div id="signers-container">
                                 <div class="initiator-Data">
-                                    <input type="text" id="auditName" placeholder="Audit Name">
+                                    <input type="text" id="initiatorName" placeholder="Your Comment">
                                 </div>
-                                <div class="initiator-Data">
-                                    <input type="text" id="initiatorName" placeholder="Your Name">
-                                </div>
-                                <div id="realSignerDataContainer" class="realSignerDataContainer">
-                                    <div class="signerData">
-                                        <input required type="email" id="signerEmail" placeholder="Stakeholder Email">
-                                        <input required type="text" id="signerName" placeholder="Stakeholder Full Name">
-                                    </div>
+                                <p style="font-family: Barlow; margin-right:0.2em; text-align: center;">Choose
+                                    Audit</p>
+                                <div style="display: flex; justify-content: center; margin-top: 0.8em;"
+                                    class="select-audit">
+                                    <select
+                                        style="color:gray;border-radius: 999px!important; padding:5px; background-color: rgba(163, 85, 89, 0.162);"
+                                        name="audits" id="audit">
+                                    </select>
                                 </div>
                             </div>
                             <div class="file-chooser-container">
@@ -61,16 +60,10 @@
                                 <p hidden id="upload">Uploading ...</p>
                             </div>
                             <div class="file-info-container">
-                                <p class="file-info-text">Upload the file you downloaded before here</p>
+                                <p class="file-info-text">Upload the file you downloaded before here and submit</p>
                             </div>
                         </div>
                         <div class="sectionCTA">
-                            <div id="removeField" hidden class="add-signer">
-                                <div class="x-holder"><i class="bi bi-x-circle-fill"></i></div>
-                            </div>
-                            <div class="add-signer-btn" class="email-input" id="addSignerTrigger">
-                                <p class="signerCTA">ADD SIGNER</p>
-                            </div>
                             <div class="add-signer-btn" id="submitSignerTrigger" hidden>
                                 <p class="signerCTA" id="submitSignerCTA">SUBMIT</p>
                             </div>
@@ -85,7 +78,7 @@
             </div>
         </div>
     </div>
-    <script src="./scripts/initiateAudit.js"></script>
+    <script src="./scripts/feedback.js"></script>
 </body>
 
 </html>
